@@ -1,5 +1,12 @@
 import { defineConfig, devices } from '@playwright/test';
 
+require('dotenv').config({path: '.env'});
+
+/**
+ * Read environment variables from file.
+ */
+//  import "dotenv/config";
+
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -34,19 +41,35 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
+      name: "setup",
+      use: {
+        ...devices["Desktop Chrome"],
+        // viewport: { width: 1920, height: 1080 },
+        baseURL: process.env.PLAYWRIGHT_APP_URL!
+      },
+      testDir: "./specs",
+      testMatch: "auth.setup.ts",
+    },
+    {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: {
+         ...devices['Desktop Chrome'],
+         baseURL: process.env.PLAYWRIGHT_APP_URL!,
+         storageState: ".auth/user.json"
+         },
+      
+      dependencies: ["setup"],
     },
 
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    // },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
 
     /* Test against mobile viewports. */
     // {
