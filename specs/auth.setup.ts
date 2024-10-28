@@ -9,7 +9,7 @@ setup('go to', async ({ browserSetup }) => {
 
     await setup.step("Log in to MyHomeIQ", async () => {
         
-        await page.goto("https://app.stage.myhomeiq.report/sign-in");
+        await page.goto("");
       
         await expect(page).toHaveTitle("myHomeIQ Admin");
       

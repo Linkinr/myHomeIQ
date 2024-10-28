@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('go to', async ({ page }) => {
+test('empty state', async ({ page }) => {
 
   await page.goto("");
 
@@ -19,6 +19,20 @@ test('go to', async ({ page }) => {
 
   const settingsButton = page.locator('div[class="profile-actions__toggle inline-svg"] > svg')
   await expect(settingsButton).toBeVisible()
+
+  await expect(page.locator('.tab-nav__item > a')).toHaveText(['Reports', 'Refi', 'Activity', 'Leads', 'Banners']);
+
+  const createReportBtn = page.getByRole('button', {name:'Create report'})
+  await expect(createReportBtn).toBeVisible()
+
+  const menuBtn = page.locator('.control-btn')
+  await expect(menuBtn).toBeVisible()
+
+  const emptyStateText = page.getByRole('heading', {name: 'No results found. Please try a different search query.'})
+  await expect(emptyStateText).toBeVisible()
+
+  const searchButton = page.locator('.iq-filters-search >  button')
+  await expect(searchButton).toBeVisible()
 
 
 
